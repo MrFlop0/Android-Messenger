@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@color/main"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/ChatTag"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:text="@string/ChatTag"
+        android:textSize="30sp"
+        android:textColor="@color/white"
+        android:background="@color/ChatColor"
+        android:gravity="center|bottom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/RV"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/MessageTools"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ChatTag" />
+
+    <LinearLayout
+        android:id="@+id/MessageTools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_editor_absoluteX="5dp">
+
+
+        <ImageButton
+            android:id="@+id/PaperClip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:backgroundTint="@color/main"
+            android:contentDescription="@string/paperclipDescription"
+            android:src="@drawable/paperclip"
+            android:onClick="paperClipFunction"/>
+
+        <EditText
+            android:id="@+id/ET"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="start|center"
+            android:layout_margin="2dp"
+            android:layout_weight="1"
+            android:autofillHints="yes"
+            android:background="@android:color/transparent"
+            android:hint="@string/messageHint"
+            android:inputType="textMultiLine"
+            android:textSize="24sp" />
+
+        <ImageButton
+            android:id="@+id/sendButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:backgroundTint="@color/main"
+            android:contentDescription="@string/sendDescription"
+            android:src="@drawable/send"
+            android:onClick="sendFunction"/>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

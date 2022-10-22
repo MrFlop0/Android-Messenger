@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">OneCh</string>
+    <string name="ChatTag">1ch</string>
+    <string name="messageHint">Message</string>
+    <string name="sendDescription">Send</string>
+    <string name="paperclipDescription">Attach file</string>
+</resources>
