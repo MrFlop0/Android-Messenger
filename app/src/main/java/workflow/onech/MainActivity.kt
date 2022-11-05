@@ -4,8 +4,10 @@ import android.content.*
 import android.net.Uri
 import android.os.Bundle
 import android.os.IBinder
+import android.view.Gravity
 import android.view.View
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -13,6 +15,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.fasterxml.jackson.annotation.JsonInclude
+import com.fasterxml.jackson.databind.MapperFeature
 import com.fasterxml.jackson.databind.json.JsonMapper
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import workflow.onech.adapters.MessageAdapter
@@ -22,7 +25,6 @@ class MainActivity : AppCompatActivity() {
     lateinit var recycler: RecyclerView
     private var service: FKNService? = null
     private var isBound = false
-    //private val db by lazy {DB.getDatabase(this).messagesDAO()}
 
     private val launchSomeActivity = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
@@ -62,6 +64,15 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private val toastReceiver: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent) {
+            val warning =
+                Toast.makeText(this@MainActivity, intent.getStringExtra("text"), Toast.LENGTH_SHORT)
+            warning.setGravity(Gravity.BOTTOM, 0, 0)
+            warning.show()
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -74,6 +85,9 @@ class MainActivity : AppCompatActivity() {
             mMessageReceiver, IntentFilter("Update")
         )
 
+        LocalBroadcastManager.getInstance(this).registerReceiver(
+            toastReceiver, IntentFilter("Toast")
+        )
 
     }
 
@@ -111,10 +125,11 @@ class MainActivity : AppCompatActivity() {
         val text = Text(editText.text.toString())
         editText.text = ""
         val data = Data(null, text)
-        val message = Message(user = "MrFlop0", message = data)
+        val message = Message(user = this.getString(R.string.USERNAME), message = data)
 
         val mapper = JsonMapper
             .builder()
+            .configure(MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES, true)
             .serializationInclusion(JsonInclude.Include.NON_NULL)
             .build()
             .registerModule(KotlinModule.Builder().build())
@@ -124,7 +139,10 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent("Send")
         intent.putExtra("json", json)
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent)
+    }
 
+    fun scrollDown(view: View) {
+        recycler.scrollToPosition(recycler.adapter!!.itemCount - 1)
     }
 
 }

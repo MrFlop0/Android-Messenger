@@ -4,4 +4,9 @@
     <string name="messageHint">Message</string>
     <string name="sendDescription">Send</string>
     <string name="paperclipDescription">Attach file</string>
+    <string name="down">▼</string>
+    <string name="example_message_Text">very long message that not gonna fit in one line and will go on next one</string>
+    <string name="example_Name">NAME</string>
+    <string name="example_Date">11.12.2020 17:00</string>
+    <string name="USERNAME">MrFlop0</string>
 </resources>

@@ -17,7 +17,6 @@ import androidx.recyclerview.widget.RecyclerView
 import workflow.onech.HighResImage
 import workflow.onech.Message
 import workflow.onech.R
-import workflow.onech.database.Entity
 import java.io.File
 import java.lang.Thread.sleep
 import java.text.SimpleDateFormat
@@ -78,7 +77,7 @@ class MessageAdapter(private val context: Context, private val values: List<Mess
                 val a = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.ENGLISH)
                 newHolder.date.text = a.format(Date(message.date!!.toLong()))
 
-                if (message.user == "MrFlop0") {
+                if (message.user == context.getString(R.string.USERNAME)) {
                     val background =
                         AppCompatResources.getDrawable(context, R.drawable.background_message_user)
                     val newBackground = background?.let { DrawableCompat.wrap(it) }
@@ -98,25 +97,27 @@ class MessageAdapter(private val context: Context, private val values: List<Mess
                 if (message.message.image?.image == null) {
                     val name = message.message.image?.link?.replace("/", ".").toString()
                     val f = File(context.cacheDir, name)
-                    val highResBitmap =
-                        BitmapFactory.decodeFile(f.absolutePath)
-                    val proportion =
-                        highResBitmap.width.toFloat() / highResBitmap.height.toFloat()
-                    message.message.image?.image = Bitmap.createScaledBitmap(
-                        highResBitmap,
-                        400,
-                        (400 / proportion).roundToInt(),
-                        false
-                    )
+                    if (f.exists()) {
+                        val highResBitmap =
+                            BitmapFactory.decodeFile(f.absolutePath)
+                        val proportion =
+                            highResBitmap.width.toFloat() / highResBitmap.height.toFloat()
+                        message.message.image?.image = Bitmap.createScaledBitmap(
+                            highResBitmap,
+                            400,
+                            (400 / proportion).roundToInt(),
+                            false
+                        )
+                    }
                     newHolder.messageImage.setImageBitmap(message.message.image?.image)
                 } else {
                     newHolder.messageImage.setImageBitmap(message.message.image.image)
                 }
 
-                val a = SimpleDateFormat("dd.MM.yyyy HH.mm", Locale.ENGLISH)
+                val a = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.ENGLISH)
                 newHolder.date.text = a.format(Date(message.date!!.toLong()))
 
-                if (message.user == "MrFlop0") {
+                if (message.user == context.getString(R.string.USERNAME)) {
                     val background =
                         AppCompatResources.getDrawable(context, R.drawable.background_message_user)
                     val newBackground = background?.let { DrawableCompat.wrap(it) }

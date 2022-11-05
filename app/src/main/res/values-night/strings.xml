@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="ChatTag">1ch</string>
-    <string name="messageHint">Enter your massage</string>
+    <string name="messageHint">Message</string>
+    <string name="down">▼</string>
+    <string name="USERNAME">MrFlop0</string>
 </resources>
