@@ -77,7 +77,7 @@ class MessageAdapter(private val context: Context, private val values: List<Mess
                 val a = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.ENGLISH)
                 newHolder.date.text = a.format(Date(message.date!!.toLong()))
 
-                if (message.user == context.getString(R.string.USERNAME)) {
+                if (message.user == context.getString(R.string.USERNAME)) { // check that message is from our user
                     val background =
                         AppCompatResources.getDrawable(context, R.drawable.background_message_user)
                     val newBackground = background?.let { DrawableCompat.wrap(it) }
