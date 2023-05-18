@@ -40,7 +40,7 @@ class FKNService : Service() {
     private val db by lazy { DB.getDatabase(this).messagesDAO() }
     private val networkScope = CoroutineScope(Dispatchers.IO)
     private val retrofit = Retrofit.Builder()
-        .baseUrl("http://213.189.221.170:8008/")
+        .baseUrl("") // URL for server goes here
         .addConverterFactory(ScalarsConverterFactory.create())
         .addConverterFactory(
             JacksonConverterFactory.create(
